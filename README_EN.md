@@ -85,7 +85,7 @@ interface ScriptMeta {
 })()
 ```
 
-## Example Two ESM Support, from [eternity](https://github.com/BlackGlory/eternity?tab=readme-ov-file#example)
+## Example Two, ESM Support from [eternity](https://github.com/BlackGlory/eternity?tab=readme-ov-file#example)
 
 ```js
 // @name Hello World
@@ -101,6 +101,32 @@ addStyleSheet(`
     content: 'World'
   }
 `)
+```
+
+## Example Three, Migration from greasyfork [google-translate-auto-languages](https://greasyfork.org/en/scripts/378166-google-translate-auto-languages/code)
+```js
+// @name Google Translate Auto Languages
+// @runAt document_idle
+// @allFrames false
+// @world USER_SCRIPT
+// @runWith esm
+// @match *://translate.google.com/*
+// @match *://translate.google.cn/*
+
+"use strict";
+const firstLangRule = /English|英语/;
+const firstLang = "en";
+const secondLang = "zh-CN";
+const detectTab = document.querySelector("[role=tab]");
+new MutationObserver(() => {
+  const isFirstLang = firstLangRule.test(detectTab.textContent);
+  const lang = isFirstLang ? secondLang : firstLang;
+  const selector = `[data-popup-corner]~* [data-language-code=${lang}]`;
+  const tab = document.querySelector(selector);
+  if (tab.getAttribute("aria-selected") !== "true") tab.click();
+}).observe(detectTab, { characterData: true, subtree: true });
+if (detectTab.getAttribute("aria-selected") !== "true") detectTab.click();
+
 ```
 
 ## For more advanced usage, it is recommended to use the example template [create-vpu](https://www.npmjs.com/package/create-vpu)
