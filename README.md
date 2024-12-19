@@ -97,6 +97,32 @@ addStyleSheet(`
 `)
 ```
 
+## 案例三 来自 greasyfork 的迁移 [google-translate-auto-languages](https://greasyfork.org/en/scripts/378166-google-translate-auto-languages/code)
+```js
+// @name Google Translate Auto Languages
+// @runAt document_idle
+// @allFrames false
+// @world USER_SCRIPT
+// @runWith esm
+// @match *://translate.google.com/*
+// @match *://translate.google.cn/*
+
+"use strict";
+const firstLangRule = /English|英语/;
+const firstLang = "en";
+const secondLang = "zh-CN";
+const detectTab = document.querySelector("[role=tab]");
+new MutationObserver(() => {
+  const isFirstLang = firstLangRule.test(detectTab.textContent);
+  const lang = isFirstLang ? secondLang : firstLang;
+  const selector = `[data-popup-corner]~* [data-language-code=${lang}]`;
+  const tab = document.querySelector(selector);
+  if (tab.getAttribute("aria-selected") !== "true") tab.click();
+}).observe(detectTab, { characterData: true, subtree: true });
+if (detectTab.getAttribute("aria-selected") !== "true") detectTab.click();
+
+```
+
 ## 更多高级使用，推荐使用示例模板  [create-vpu](https://www.npmjs.com/package/create-vpu)
 
 - create-vpu [源码](packages/create-vpu/package.json)
