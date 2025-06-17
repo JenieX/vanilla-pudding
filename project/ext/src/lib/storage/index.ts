@@ -1,5 +1,5 @@
-import { joinToStr, parseToReg } from '@/lib/tool'
 import { first } from 'lodash-es'
+import { joinToStr, parseToReg } from '@/lib/tool.ts'
 
 export interface TSetByKeyArrOpt {
   expired?: number

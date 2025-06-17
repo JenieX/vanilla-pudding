@@ -1,8 +1,14 @@
-import { registerBackgroundScriptService } from '@/lib/rpc/backgroundScriptRPC'
-import { registerBackgroundToolService } from '@/lib/rpc/backgroundToolRPC'
-import { configureCSP, registerUserScript, unregisterAllUserScripts } from '@/lib/user-script'
+import { registerBackgroundScriptService } from '@/lib/rpc/backgroundScriptRPC.ts'
+import { registerBackgroundToolService } from '@/lib/rpc/backgroundToolRPC.ts'
+import {
+  configureCSP,
+  isUserScriptsAPIAvailable,
+  registerUserScript,
+  unregisterAllUserScripts,
+} from '@/lib/user-script.ts'
 
 export default defineBackground(() => {
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => true)
   // 后台 worker 每5分钟就会休眠，所以定时唤醒一下
   function keepServiceWorkerAlive() {
     setInterval(async () => {
@@ -115,11 +121,13 @@ export default defineBackground(() => {
     }
     try {
       keepServiceWorkerAlive()
-      await configureCSP()
-      await unregisterAllUserScripts()
-      const enabledScripts = await backgroundScriptService.getAllEnabledUserScripts()
-      for (const userScript of enabledScripts) {
-        await registerUserScript(userScript)
+      if (isUserScriptsAPIAvailable()) {
+        await configureCSP()
+        await unregisterAllUserScripts()
+        const enabledScripts = await backgroundScriptService.getAllEnabledUserScripts()
+        for (const userScript of enabledScripts) {
+          await registerUserScript(userScript)
+        }
       }
     }
     catch (e) {

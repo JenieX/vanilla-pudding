@@ -2,7 +2,7 @@ import { parseCode } from '@/util/parseCode.ts'
 
 export function isUserScriptsAPIAvailable() {
   try {
-    chrome.userScripts
+    chrome.userScripts.getScripts()
     return true
   }
   catch {

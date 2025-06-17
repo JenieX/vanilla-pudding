@@ -51,7 +51,7 @@ export class BackgroundToolService {
   }
 
   // cookie API
-  async cookieGet(option: chrome.cookies.Details) {
+  async cookieGet(option: chrome.cookies.CookieDetails) {
     return chrome.cookies.get(option)
   }
 
@@ -63,7 +63,7 @@ export class BackgroundToolService {
     return chrome.cookies.set(option)
   }
 
-  async cookieRemove(option: chrome.cookies.Details) {
+  async cookieRemove(option: chrome.cookies.CookieDetails) {
     return chrome.cookies.remove(option)
   }
 
@@ -136,7 +136,7 @@ export class BackgroundToolService {
     return firstTab?.windowId
   }
 
-  async tabsCaptureActiveTab(opt: chrome.tabs.CaptureVisibleTabOptions) {
+  async tabsCaptureActiveTab(opt: chrome.extensionTypes.ImageDetails) {
     opt = Object.assign({ format: 'png' }, opt)
     const id = await this.tabsGetActiveWindowId()
     return chrome.tabs.captureVisibleTab(id, opt)

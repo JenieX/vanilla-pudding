@@ -1,8 +1,8 @@
 import type { IndexableType, Table } from 'dexie'
-import { isUserScriptsAPIAvailable } from '@/lib/user-script'
-import { guid } from '@/util/guid'
 import { Dexie } from 'dexie'
 import { trim, uniq } from 'lodash-es'
+import { isUserScriptsAPIAvailable } from '@/lib/user-script.ts'
+import { guid } from '@/util/guid.ts'
 
 class Database extends Dexie {
   userScripts: Table<any, IndexableType, any>

@@ -82,8 +82,16 @@
       </NScrollbar>
     </div>
   </div>
-  <div v-else class="flex justify-center items-center text-[#f87171] w-[360px] h-[400px]">
-    {{ msg.noSupportTip }}
+  <div v-else class="flex justify-center items-center w-[360px] h-[400px]">
+    <NButton
+      text
+      tag="a"
+      :href="msg.noSupportTipLink"
+      target="_blank"
+      type="error"
+    >
+      <span v-html="msg.noSupportTip" />
+    </NButton>
   </div>
 </template>
 
@@ -93,8 +101,6 @@ import type {
 } from 'naive-ui'
 import type { Component } from 'vue'
 import { i18n } from '#i18n'
-import { getBackgroundScriptService } from '@/lib/rpc/backgroundScriptRPC.ts'
-import { getBackgroundToolService } from '@/lib/rpc/backgroundToolRPC.ts'
 import {
   Github,
 } from '@vicons/fa'
@@ -120,10 +126,13 @@ import {
   useModal,
 } from 'naive-ui'
 import { computed, h, onMounted, ref } from 'vue'
+import { getBackgroundScriptService } from '@/lib/rpc/backgroundScriptRPC.ts'
+import { getBackgroundToolService } from '@/lib/rpc/backgroundToolRPC.ts'
 
 const msg = {
   openSource: i18n.t('openSource'),
   noSupportTip: i18n.t('noSupportTip'),
+  noSupportTipLink: i18n.t('noSupportTipLink'),
   script_manage: i18n.t('script.manage'),
   script_create: i18n.t('script.create'),
   script_create2: i18n.t('script.create2'),
@@ -223,7 +232,24 @@ function handleSelect(key: string | number) {
 
 async function query() {
   if (!support.value) {
-    message.error(msg.noSupportTip)
+    message.error(
+      () =>
+        h(
+          'div',
+          h(NButton, {
+            href: msg.noSupportTipLink,
+            target: '_blank',
+            type: 'error',
+            tag: 'a',
+            text: true,
+          }, () => h('span', {
+            innerHTML: msg.noSupportTip,
+          })),
+        ),
+      {
+        keepAliveOnHover: true,
+      },
+    )
     return
   }
   list.value = await backgroundScriptService.getAllUserScripts()

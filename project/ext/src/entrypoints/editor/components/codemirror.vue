@@ -17,12 +17,12 @@ body {
 
 <script setup lang="ts">
 import { i18n } from '#i18n'
-import codeExample from '@/entrypoints/editor/lib/code.js?raw'
-import { getBackgroundScriptService } from '@/lib/rpc/backgroundScriptRPC.ts'
 import * as monaco from 'monaco-editor'
 import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 import { useMessage } from 'naive-ui'
 import { onMounted, ref } from 'vue'
+import codeExample from '@/entrypoints/editor/lib/code.js?raw'
+import { getBackgroundScriptService } from '@/lib/rpc/backgroundScriptRPC.ts'
 
 self.MonacoEnvironment = {
   getWorker() {

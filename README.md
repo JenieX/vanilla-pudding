@@ -22,7 +22,7 @@
 的脚本加载器
 - 一个类似 [Tampermonkey](https://www.tampermonkey.net/) ，但不支持 GM_* API的脚本管理器
 - 内置 MonacoEditor
-- 一个强大的管理器，支持来自插件的高级API能力 [服务源码](project/ext/lib/service/backgroundToolService.ts)
+- 一个强大的管理器，支持来自插件的高级API能力 [服务源码](project/ext/src/lib/service/backgroundToolService.ts)
   - [x] Cookie `chrome.cookies`
   - [x] Tabs `chrome.tabs`
   - [x] Storage (`chrome.storage.sync`、`chrome.storage.local`、`chrome.storage.session`) 提供插件级存储能力。
@@ -107,20 +107,21 @@ addStyleSheet(`
 // @match *://translate.google.com/*
 // @match *://translate.google.cn/*
 
-"use strict";
-const firstLangRule = /English|英语/;
-const firstLang = "en";
-const secondLang = "zh-CN";
-const detectTab = document.querySelector("[role=tab]");
+'use strict'
+const firstLangRule = /English|英语/
+const firstLang = 'en'
+const secondLang = 'zh-CN'
+const detectTab = document.querySelector('[role=tab]')
 new MutationObserver(() => {
-  const isFirstLang = firstLangRule.test(detectTab.textContent);
-  const lang = isFirstLang ? secondLang : firstLang;
-  const selector = `[data-popup-corner]~* [data-language-code=${lang}]`;
-  const tab = document.querySelector(selector);
-  if (tab.getAttribute("aria-selected") !== "true") tab.click();
-}).observe(detectTab, { characterData: true, subtree: true });
-if (detectTab.getAttribute("aria-selected") !== "true") detectTab.click();
-
+  const isFirstLang = firstLangRule.test(detectTab.textContent)
+  const lang = isFirstLang ? secondLang : firstLang
+  const selector = `[data-popup-corner]~* [data-language-code=${lang}]`
+  const tab = document.querySelector(selector)
+  if (tab.getAttribute('aria-selected') !== 'true')
+    tab.click()
+}).observe(detectTab, { characterData: true, subtree: true })
+if (detectTab.getAttribute('aria-selected') !== 'true')
+  detectTab.click()
 ```
 
 ## 更多高级使用，推荐使用示例模板  [create-vpu](https://www.npmjs.com/package/create-vpu)

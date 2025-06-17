@@ -1,5 +1,5 @@
 import { ScriptDAO } from '@/lib/idb'
-import { registerUserScript, unregisterUserScript } from '@/lib/user-script'
+import { registerUserScript, unregisterUserScript } from '@/lib/user-script.ts'
 import { guid } from '@/util/guid.ts'
 
 export class BackgroundScriptService extends ScriptDAO {

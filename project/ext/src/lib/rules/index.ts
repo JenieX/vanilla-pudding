@@ -1,4 +1,4 @@
-import { parse2Hash, parseURL } from '@/lib/tool'
+import { parse2Hash, parseURL } from '@/lib/tool.ts'
 
 enum RuleActionType {
   BLOCK = 'block',

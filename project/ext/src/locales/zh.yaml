@@ -1,7 +1,8 @@
 extName: 香草布丁🌿🍮
 extDescription: 香草布丁用户脚本管理器,可以帮助您管理和运行浏览器用户脚本
 openSource: https://github.com/Xdy1579883916/vanilla-pudding
-noSupportTip: 请启用插件开发者模式以使用此插件
+noSupportTip: 插件暂不可用<br><br>点击了解如何开启
+noSupportTipLink: https://developer.chrome.com/blog/chrome-userscript?hl=zh_cn
 
 script:
   empty: 你的脚本列表空空的

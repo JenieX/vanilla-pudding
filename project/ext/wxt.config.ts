@@ -5,6 +5,9 @@ import { defineConfig } from 'wxt'
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
+  srcDir: 'src',
+  publicDir: 'public',
+  modulesDir: 'modules',
   modules: [
     '@wxt-dev/i18n/module',
   ],
@@ -13,8 +16,7 @@ export default defineConfig({
       vueTemplate: true,
     },
   },
-  extensionApi: 'chrome',
-  runner: {
+  webExt: {
     disabled: true,
   },
   manifest: {
