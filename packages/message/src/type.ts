@@ -132,10 +132,10 @@ export declare class BackgroundToolService {
   private bindMethods
   hello(msg?: string): Promise<string>
   download(option: chrome.downloads.DownloadOptions): Promise<number>
-  cookieGet(option: chrome.cookies.Details): Promise<chrome.cookies.Cookie>
+  cookieGet(option: chrome.cookies.CookieDetails): Promise<chrome.cookies.Cookie>
   cookieGetAll(option: chrome.cookies.GetAllDetails): Promise<chrome.cookies.Cookie[]>
   cookieSet(option: chrome.cookies.SetDetails): Promise<chrome.cookies.Cookie>
-  cookieRemove(option: chrome.cookies.Details): Promise<chrome.cookies.Details>
+  cookieRemove(option: chrome.cookies.CookieDetails): Promise<chrome.cookies.CookieDetails>
   cookieGetAllStores(): Promise<chrome.cookies.CookieStore[]>
   getURL(path: string): Promise<string>
   windowsGet(windowId: number, queryOptions?: chrome.windows.QueryOptions): Promise<chrome.windows.Window>
@@ -151,7 +151,7 @@ export declare class BackgroundToolService {
   tabsCreate(createProperties: chrome.tabs.CreateProperties): Promise<chrome.tabs.Tab>
   tabsGetActive(currentWin?: boolean): Promise<chrome.tabs.Tab[]>
   tabsGetActiveWindowId(): Promise<number>
-  tabsCaptureActiveTab(opt: chrome.tabs.CaptureVisibleTabOptions): Promise<string>
+  tabsCaptureActiveTab(opt: chrome.extensionTypes.ImageDetails): Promise<string>
   tabsUpdate(tabId: number, updateProperties: chrome.tabs.UpdateProperties): Promise<chrome.tabs.Tab>
 }
 
