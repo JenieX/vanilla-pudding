@@ -1,5 +1,5 @@
-import { guid } from './guid'
 import type { BackgroundToolService, TWdeCors } from './type'
+import { guid } from './guid'
 
 const messagePrefix = 'vanilla-pudding'
 
@@ -228,7 +228,6 @@ export class Extension {
 
       emit(Event4ChromeKey, Object.assign({}, { callbackId }, params))
       const win = window as any
-      // eslint-disable-next-line ts/no-unused-expressions
       win.wdeListener || (win.wdeListener = new Map())
       if (!win.wdeListener.get(this.id)) {
         win.wdeListener.set(this.id, this)
@@ -246,17 +245,28 @@ export class Extension {
     listen(Event4PageKey, (event) => {
       const { detail } = event
       const callback = this.callbacks.get(detail.callbackId)
-      if (!detail.success && detail.msg.includes('插件关闭了')) {
-        this.dispatchExtClose()
-        callback.reject({
-          code: 502,
-          message: detail.msg,
-        })
-        clear(detail.callbackId)
-        return
-      }
       if (callback) {
-        callback.resolve(detail)
+        // error
+        if (detail.success) {
+          callback.resolve(detail.data)
+        }
+        else {
+          if (detail.msg.includes('插件关闭了')) {
+            this.dispatchExtClose()
+            callback.reject({
+              code: 502,
+              message: detail.msg,
+              data: detail.data,
+            })
+          }
+          else {
+            callback.reject({
+              code: 500,
+              message: detail.msg,
+              data: detail.data,
+            })
+          }
+        }
         clear(detail.callbackId)
       }
     })
