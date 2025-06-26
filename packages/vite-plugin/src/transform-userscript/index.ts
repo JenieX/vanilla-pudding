@@ -3,8 +3,8 @@ type StrOrStrArr = string | string[]
 interface ScriptMeta {
   'name': string
   'world'?: chrome.userScripts.ExecutionWorld
-  'runAt'?: chrome.userScripts.RunAt
-  'run-at'?: chrome.userScripts.RunAt
+  'runAt'?: chrome.extensionTypes.RunAt
+  'run-at'?: chrome.extensionTypes.RunAt
   'allFrames'?: boolean
   'all-frames'?: boolean
   'match'?: StrOrStrArr
@@ -58,7 +58,7 @@ export function transformUserScript({ cdnScripts, scriptMeta }: Options) {
   }
 }
 
-function replaceImports(code: string, cdnScripts: Record<string, string>): string {
+export function replaceImports(code: string, cdnScripts: Record<string, string>): string {
   let newCode = code
   Object.entries(cdnScripts).forEach(([scriptName, cdnURL]) => {
     newCode = newCode.replace(new RegExp(`(import|from)\\s?["'](${scriptName})["'];`, 'gi'), `$1 "${cdnURL}";`)
@@ -66,7 +66,7 @@ function replaceImports(code: string, cdnScripts: Record<string, string>): strin
   return newCode
 }
 
-function generateMetaStr(scriptMeta: ScriptMeta): string {
+export function generateMetaStr(scriptMeta: ScriptMeta): string {
   return Object.entries(scriptMeta).reduce((pre, [k, v]) => {
     if (Array.isArray(v)) {
       v.forEach((item) => {

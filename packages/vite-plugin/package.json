@@ -1,7 +1,7 @@
 {
   "name": "@vanilla-pudding/vite-plugin",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "description": "香草布丁-vite-plugin",
   "author": "deyu",
